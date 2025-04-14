@@ -42,7 +42,7 @@ public struct GetMovieDetailRepository<
         _remote.execute(request: request)
             .map { response in
                 var result = _mapper.transformResponseToDomain(response: response)
-                _locale.list(request: result.id)
+                let locale = _locale.list(request: result.id)
                     .map { list in
                         if let favorite = list.first(where: { (Int($0.movie_id) ?? 0) == result.id }) {
                             result.isFavorite = (Int(favorite.movie_id) ?? 0) == result.id
