@@ -8,27 +8,27 @@
 import Foundation
 
 public struct ResponseMovieDetail: Codable {
-    let adult: Bool
-    let backdropPath: String
-    let belongsToCollection: BelongsToCollection
-    let budget: Int
-    let genres: [Genre]
-    let homepage: String
-    let id: Int
-    let imdbID: String
-    let originCountry: [String]
-    let originalLanguage, originalTitle, overview: String
-    let popularity: Double
-    let posterPath: String
-    let productionCompanies: [ProductionCompany]
-    let productionCountries: [ProductionCountry]
-    let releaseDate: String
-    let revenue, runtime: Int
-    let spokenLanguages: [SpokenLanguage]
-    let status, tagline, title: String
-    let video: Bool
-    let voteAverage: Double
-    let voteCount: Int
+    public let adult: Bool
+    public let backdropPath: String
+    public let belongsToCollection: BelongsToCollection
+    public let budget: Int
+    public let genres: [Genre]
+    public let homepage: String
+    public let id: Int
+    public let imdbID: String
+    public let originCountry: [String]
+    public let originalLanguage, originalTitle, overview: String
+    public let popularity: Double
+    public let posterPath: String
+    public let productionCompanies: [ProductionCompany]
+    public let productionCountries: [ProductionCountry]
+    public let releaseDate: String
+    public let revenue, runtime: Int
+    public let spokenLanguages: [SpokenLanguage]
+    public let status, tagline, title: String
+    public let video: Bool
+    public let voteAverage: Double
+    public let voteCount: Int
 
     enum CodingKeys: String, CodingKey {
         case adult
@@ -82,9 +82,9 @@ public struct ResponseMovieDetail: Codable {
     }
 }
 
-struct BelongsToCollection: Codable, DefaultInitializable {
-    let id: Int
-    let name, posterPath, backdropPath: String
+public struct BelongsToCollection: Codable, DefaultInitializable {
+    public let id: Int
+    public let name, posterPath, backdropPath: String
 
     enum CodingKeys: String, CodingKey {
         case id, name
@@ -92,7 +92,7 @@ struct BelongsToCollection: Codable, DefaultInitializable {
         case backdropPath = "backdrop_path"
     }
     
-    init(
+    public init(
         id: Int = 0,
         name: String = "",
         posterPath: String = "",
@@ -104,7 +104,7 @@ struct BelongsToCollection: Codable, DefaultInitializable {
         self.backdropPath = backdropPath
     }
     
-    init() {
+    public init() {
         self.init(name: "")
     }
 }
@@ -125,7 +125,7 @@ public struct ProductionCompany: Codable, Equatable {
         case originCountry = "origin_country"
     }
     
-    internal init(
+    public init(
         id: Int = 0,
         logoPath: String = "",
         name: String = "",
@@ -146,8 +146,13 @@ public struct ProductionCompany: Codable, Equatable {
     }
 }
 
-struct ProductionCountry: Codable {
+public struct ProductionCountry: Codable {
     let iso3166_1, name: String
+    
+    public init(iso3166_1: String, name: String) {
+        self.iso3166_1 = iso3166_1
+        self.name = name
+    }
 
     enum CodingKeys: String, CodingKey {
         case iso3166_1 = "iso_3166_1"
@@ -155,8 +160,14 @@ struct ProductionCountry: Codable {
     }
 }
 
-struct SpokenLanguage: Codable {
+public struct SpokenLanguage: Codable {
     let englishName, iso639_1, name: String
+    
+    public init(englishName: String, iso639_1: String, name: String) {
+        self.englishName = englishName
+        self.iso639_1 = iso639_1
+        self.name = name
+    }
 
     enum CodingKeys: String, CodingKey {
         case englishName = "english_name"
