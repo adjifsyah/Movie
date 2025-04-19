@@ -13,15 +13,15 @@ public struct GetMovieDetailRepository<
     RemoteDataSource: DataSource,
     MovieLocaleDataSource: LocaleDataSource,
     Transformer: Mapper
->: Repository where RemoteDataSource.Request == Int,
+>: Repository where RemoteDataSource.Request == DetailMovieModel,
                     RemoteDataSource.Response == ResponseMovieDetail,
-                    MovieLocaleDataSource.Request == Int,
+                    MovieLocaleDataSource.Request == DetailMovieModel,
                     MovieLocaleDataSource.Response == MoviesEntityLib,
                     Transformer.Response == ResponseMovieDetail,
                     Transformer.Domain == DetailMovieModel,
                     Transformer.Entity == MoviesEntityLib
 {
-    public typealias Request = Int
+    public typealias Request = DetailMovieModel
     public typealias Response = DetailMovieModel
     
     private let _remote: RemoteDataSource
@@ -38,18 +38,16 @@ public struct GetMovieDetailRepository<
         self._mapper = mapper
     }
     
-    public func execute(request: Int?) -> RxSwift.Observable<DetailMovieModel> {
+    public func execute(request: DetailMovieModel?) -> RxSwift.Observable<DetailMovieModel> {
         _remote.execute(request: request)
-            .map { response in
-                var result = _mapper.transformResponseToDomain(response: response)
-                let locale = _locale.list(request: result.id)
+            .flatMap { response -> Observable<DetailMovieModel> in
+                return _locale.list(request: nil)
                     .map { list in
-                        if let favorite = list.first(where: { (Int($0.movie_id) ?? 0) == result.id }) {
-                            result.isFavorite = (Int(favorite.movie_id) ?? 0) == result.id
-                        }
+                        var result = _mapper.transformResponseToDomain(response: response)
+                        let isFav = list.contains(where: { $0.movie_id == String(response.id) })
+                        result.isFavorite = isFav
+                        return result
                     }
-                
-                return result
             }
     }
 }

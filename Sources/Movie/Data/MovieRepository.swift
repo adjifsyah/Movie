@@ -18,7 +18,7 @@ public class MoviesRepositories<
     RemoteDataSource.Response == [MovieResponse],
     Transformer.Response == [MovieResponse],
     Transformer.Domain == [MovieDomainModel],
-    Transformer.Entity == Any {
+    Transformer.Entity == MoviesEntityLib {
 
     public typealias Request = URLRequest
     public typealias Response = [MovieDomainModel]

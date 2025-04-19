@@ -11,7 +11,7 @@ import RealmSwift
 import RxSwift
 
 public struct GetFavoriteMoviesLocaleDataSource: LocaleDataSource {
-    public typealias Request = Int
+    public typealias Request = DetailMovieModel
     public typealias Response = MoviesEntityLib
     private let _realm: Realm
     
@@ -19,7 +19,7 @@ public struct GetFavoriteMoviesLocaleDataSource: LocaleDataSource {
         self._realm = realm
     }
     
-    public func list(request: Int?) -> RxSwift.Observable<[MoviesEntityLib]> {
+    public func list(request: DetailMovieModel?) -> RxSwift.Observable<[MoviesEntityLib]> {
         Observable<[MoviesEntityLib]>.create { observer in
             let favorites = {
                 _realm.objects(MoviesEntityLib.self)
@@ -30,8 +30,20 @@ public struct GetFavoriteMoviesLocaleDataSource: LocaleDataSource {
         }
     }
     
-    public func add(entities: [MoviesEntityLib]) -> RxSwift.Observable<Bool> {
-        fatalError()
+    public func add(entity: MoviesEntityLib) -> RxSwift.Observable<Bool> {
+        return Observable.create { observer in
+            do {
+                let realm = try Realm()
+                try realm.write {
+                    realm.add(entity)
+                }
+                observer.onNext(true)
+                observer.onCompleted()
+            } catch {
+                observer.onError(error)
+            }
+            return Disposables.create()
+        }
     }
     
     public func update(id: Int, entity: MoviesEntityLib) -> RxSwift.Observable<Bool> {
@@ -39,7 +51,26 @@ public struct GetFavoriteMoviesLocaleDataSource: LocaleDataSource {
     }
     
     public func delete(id: Int) -> RxSwift.Observable<Bool> {
-        fatalError()
+        return Observable.create { observer in
+            do {
+                let realm = try Realm()
+                if let entityToDelete = realm.objects(MoviesEntityLib.self).filter("movie_id == %@", String(id)).first {
+                    try realm.write {
+                        realm.delete(entityToDelete)
+                    }
+                    observer.onNext(true)
+                    observer.onCompleted()
+                } else {
+                    // Kalau data tidak ditemukan, tetap selesaikan dengan false
+                    observer.onNext(false)
+                    observer.onCompleted()
+                }
+            } catch {
+                observer.onError(error)
+            }
+            
+            return Disposables.create()
+        }
     }
 }
 

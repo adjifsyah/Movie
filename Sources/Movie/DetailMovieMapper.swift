@@ -22,7 +22,8 @@ public struct DetailMovieTransform: Mapper {
             overview: entity.overview,
             backdropPath: entity.backdrop_path,
             posterPath: entity.poster_path,
-            releaseDate: entity.release_date
+            releaseDate: entity.release_date,
+            voteAverage: entity.average
         )
     }
     
@@ -44,7 +45,15 @@ public struct DetailMovieTransform: Mapper {
         )
     }
     
-    public func transformDomainToEntity(domain: DetailMovieModel) -> Entity {
-        fatalError()
+    public func transformDomainToEntity(domain: DetailMovieModel) -> MoviesEntityLib {
+        let entity = MoviesEntityLib()
+        entity.movie_id = String(domain.id)
+        entity.title = domain.title
+        entity.overview = domain.overview
+        entity.average = domain.voteAverage
+        entity.release_date = domain.releaseDate
+        entity.poster_path = domain.posterPath
+        entity.backdrop_path = domain.backdropPath
+        return entity
     }
 }

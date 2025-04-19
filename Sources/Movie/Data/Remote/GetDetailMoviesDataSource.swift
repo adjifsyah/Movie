@@ -11,7 +11,7 @@ import Core
 import RxSwift
 
 public class GetDetailMoviesDataSource: DataSource {
-    public typealias Request = Int
+    public typealias Request = DetailMovieModel
     public typealias Response = ResponseMovieDetail
     
 //    private let client: HttpClient
@@ -22,8 +22,8 @@ public class GetDetailMoviesDataSource: DataSource {
         self.remote = remote
     }
     
-    public func execute(request: Int?) -> Observable<ResponseMovieDetail> {
-        self.remote.load(endpoint: "/\(request ?? 0)", method: "GET", params: nil)
+    public func execute(request: DetailMovieModel?) -> Observable<ResponseMovieDetail> {
+        self.remote.load(endpoint: "/\(request?.id ?? 0)", method: "GET", params: nil)
             .map { (response: ResponseMovieDetail) in
 //                DetailMovieTransform().transformResponseToDomain(response: response)
 //                MovieMapper.mapMovieResponseToDomain(input: response.results)

@@ -10,12 +10,12 @@ import Core
 
 public struct MovieTransform: Mapper {
     public typealias Response = [MovieResponse]
-    public typealias Entity = Any
+    public typealias Entity = MoviesEntityLib
     public typealias Domain = [MovieDomainModel]
     
     public init() { }
     
-    public func transformEntityToDomain(entity: Entity) -> [MovieDomainModel] {
+    public func transformEntityToDomain(entity: MoviesEntityLib) -> [MovieDomainModel] {
         fatalError("Not implemented")
     }
     
@@ -32,7 +32,7 @@ public struct MovieTransform: Mapper {
         }
     }
     
-    public func transformDomainToEntity(domain: [MovieDomainModel]) -> Entity {
+    public func transformDomainToEntity(domain: [MovieDomainModel]) -> MoviesEntityLib {
         fatalError("Not implemented")
     }
 }
