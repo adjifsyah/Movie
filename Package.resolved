@@ -1,5 +1,5 @@
 {
-  "originHash" : "ec90471ef2900b2851283579c4dba861bcfa9daf6066cfc7b751d6429e3d2ddc",
+  "originHash" : "64e9a3b2a2ff5d30c12dc21e53a57b3e56bc551fcbbec126c932cbe75cca6a35",
   "pins" : [
     {
       "identity" : "alamofire",
@@ -15,8 +15,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/adjifsyah/Core.git",
       "state" : {
-        "revision" : "af7a590f77a81150e2f3fe1534332990d5d55403",
-        "version" : "1.0.22"
+        "revision" : "4cabe60cccfe1309d73bbc87e17550a847820e86",
+        "version" : "1.0.23"
       }
     },
     {

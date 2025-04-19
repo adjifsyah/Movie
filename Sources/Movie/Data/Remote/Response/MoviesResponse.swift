@@ -9,10 +9,10 @@ import Foundation
 import Core
 
 public struct NowPlayingMoviesResponse: Codable {
-    let page: Int
-    let results: [MovieResponse]
-    let totalPages: Int
-    let totalResults: Int
+    public let page: Int
+    public let results: [MovieResponse]
+    public let totalPages: Int
+    public let totalResults: Int
 
     enum CodingKeys: String, CodingKey {
         case page = "page"
@@ -21,7 +21,7 @@ public struct NowPlayingMoviesResponse: Codable {
         case totalResults = "total_results"
     }
     
-    internal init(
+    public init(
         page: Int = 0,
         results: [MovieResponse] = [],
         totalPages: Int = 0,
@@ -38,7 +38,7 @@ public struct MovieResponse: Codable {
     let adult: Bool
     let backdropPath: String
     let genreIDS: [Int]
-    let id: Int
+    public let id: Int
     let originalLanguage: String
     let originalTitle: String
     let overview: String
@@ -67,7 +67,7 @@ public struct MovieResponse: Codable {
         case voteCount = "vote_count"
     }
     
-    internal init(
+    public init(
         adult: Bool = false,
         backdropPath: String = "",
         genreIDS: [Int] = [],
